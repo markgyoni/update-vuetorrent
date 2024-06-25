@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Edit this path if you have installed VueTorrent in a different directory
-vuetorrentPath="./vuetorrent"
+vuetorrentPath="../vuetorrent"
 
 # if ! which zip &> /dev/null; then
 #     echo "zip is not installed. Please install zip before running this script."
@@ -18,9 +18,13 @@ if ! currentVersion=$(cat "${vuetorrentPath}/version.txt"); then
 fi
 latestVersion=$(curl -sL https://github.com/VueTorrent/VueTorrent/releases/latest -w %{url_effective} -o /dev/null | grep -oP '(?<=tag\/v).*')
 
+currentFormatted=$(echo "${currentVersion}" | tr -d '.')
+latestFormatted=$(echo "${latestVersion}" | tr -d '.')
+
 echo "Local version: ${currentVersion}"
 echo "Latest version: ${latestVersion}"
-if [[ "${currentVersion}" < "${latestVersion}" ]]; then
+
+if [ "${latestFormatted}" -gt "${currentFormatted}" ]; then
     echo "Updating VueTorrent..."
 
     tempDir=$(mktemp -d)
