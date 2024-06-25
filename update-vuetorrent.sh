@@ -3,16 +3,19 @@
 # Edit this path if you have installed VueTorrent in a different directory
 vuetorrentPath="./vuetorrent"
 
-if ! command -v unzip &> /dev/null; then
-    echo "unzip is not installed. Please install unzip before running this script."
-    exit 1
-fi
-if ! command -v curl &> /dev/null; then
-    echo "curl is not installed. Please install curl before running this script."
-    exit 1
-fi
+# if ! which zip &> /dev/null; then
+#     echo "zip is not installed. Please install zip before running this script."
+#     exit 1
+# fi
+# if ! which curl &> /dev/null; then
+#     echo "curl is not installed. Please install curl before running this script."
+#     exit 1
+# fi
 
-currentVersion=$(cat "${vuetorrentPath}/version.txt")
+if ! currentVersion=$(cat "${vuetorrentPath}/version.txt"); then
+    echo "Error: Failed to read version.txt file. Are you sure the path is correct?"
+    exit 1
+fi
 latestVersion=$(curl -sL https://github.com/VueTorrent/VueTorrent/releases/latest -w %{url_effective} -o /dev/null | grep -oP '(?<=tag\/v).*')
 
 echo "Local version: ${currentVersion}"
