@@ -33,7 +33,7 @@ if [ "${latestFormatted}" -gt "${currentFormatted}" ]; then
     curl -sL $downloadUrl -o $zipFilePath
     rm -rf ${vuetorrentPath}/*
     unzip $zipFilePath -d . > /dev/null
-    if [[ "${vuetorrentPath}" != "./vuetorrent" ]]; then
+    if [ "${vuetorrentPath}" != "./vuetorrent" ]; then
         mv ./vuetorrent/* ${vuetorrentPath}
         rmdir ./vuetorrent
     fi
